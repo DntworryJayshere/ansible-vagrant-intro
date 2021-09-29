@@ -1,0 +1,30 @@
+---
+- hosts: all
+  become: true
+
+  vars_files:
+    - vars.yaml
+
+  pre_tasks:
+    - name: Updates apt cache if needed.
+      apt: update_cache=true cache_valid_time=3600
+
+  handlers:
+    - name: restart xxxx
+      service: name=xxxx state=restarted
+
+  tasks:
+    - name: Update all packages to their latest version
+      apt:
+        name: "*"
+        state: latest
+    - name: Upgrade the OS (apt-get dist-upgrade)
+      apt:
+        upgrade: dist
+    - name: Install a list of packages
+      apt:
+        pkg:
+          - dnsutils
+          - vim
+    - name: Configure legacy ip-tables.
+      command: update-alternatives --set iptables /usr/sbin/iptables-legacy
