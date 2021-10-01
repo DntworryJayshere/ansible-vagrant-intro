@@ -18,7 +18,7 @@
       apt:
         name: "*"
         state: latest
-    - name: Upgrade the OS (apt-get dist-upgrade)
+    - name: Upgrade the OS
       apt:
         upgrade: dist
     - name: Install a list of packages
