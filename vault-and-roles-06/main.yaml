@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gatherfacts: no
+
+  vars_files:
+    - vars/api_key.yaml
+
+  handlers:
+    - import_tasks: handlers/apache.yaml
+
+  tasks:
+    - import_tasks: tasks/apache.yaml
+    - include_tasks: tasks/log.yaml
+      #include lets you include dynamic tasks
+
+- import_playbook: app.yaml
