@@ -4,11 +4,17 @@
   become: true
 
   vars:
+    apache_package:
+      - httpd
+      - httpd-devel
+    apache_service:
+      - httpd
+      - httpd-devel
     proxy_vars:
       http_proxy: http://example-proxy:80/
       https_proxy: http://example-proxy:80/
 
-  # This environment vars will not be persistent on the server but will globally apply to all tasks
+  # These environment vars will not be persistent on the server but will globally apply to all tasks
   # environment:
   #   http_proxy: http://example-proxy:80/
   #   https_proxy: http://example-proxy:80/
@@ -16,7 +22,7 @@
   handlers:
     - name: restart apache
       service:
-        name: httpd
+        name: "{{ apache_service }}"
         state: restarted
 
   tasks:
@@ -42,9 +48,7 @@
 
     - name: Ensure Apache is installed.
       yum:
-        name:
-          - httpd
-          - httpd-devel
+        name: "{{ apache_package }}"
         state: present
 
     - name: Make sure handlers are flushed immediately.
@@ -58,6 +62,6 @@
 
     - name: Ensure Apache is running and starts at boot.
       service:
-        name: httpd
+        name: "{{ apache_service }}"
         state: started
         enabled: true

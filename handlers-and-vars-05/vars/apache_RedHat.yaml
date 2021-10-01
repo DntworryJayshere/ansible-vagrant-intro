@@ -1,0 +1,8 @@
+---
+apache_package:
+  - httpd
+  - httpd-devel
+apache_service:
+  - httpd
+  - httpd-devel
+apache_config_dir: /etc/httpd/conf.d
