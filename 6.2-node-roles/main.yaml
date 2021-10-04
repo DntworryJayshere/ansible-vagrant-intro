@@ -25,6 +25,8 @@
     - name: Ensure firewalld is stopped (since this is a test server).
       service: name=firewalld state=stopped
 
+    # - include_role: nodejs     -if you need to perform the role after some above events
+
     - name: Ensure Node.js app folder exists.
       file: "path={{ node_apps_location }} state=directory"
 
